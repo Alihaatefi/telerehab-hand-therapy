@@ -37,7 +37,7 @@ dev = ["pytest>=7.4"]
 telerehab = "telerehab.__main__:main"
 
 [project.urls]
-Repository = "https://github.com/alihatefi/telerehab-hand-therapy"
+Repository = "https://github.com/Alihaatefi/telerehab-hand-therapy"
 
 [tool.setuptools.packages.find]
 where = ["src"]

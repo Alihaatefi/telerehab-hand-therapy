@@ -64,7 +64,7 @@ exercise and an impossible one. Details in
 Requires **Python 3.10–3.12** (MediaPipe has no 3.13+ wheels) and a webcam.
 
 ```bash
-git clone https://github.com/alihatefi/telerehab-hand-therapy
+git clone https://github.com/Alihaatefi/telerehab-hand-therapy
 cd telerehab-hand-therapy
 
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
