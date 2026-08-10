@@ -1,11 +1,13 @@
 """Application shell: window setup and navigation between screens.
 
-Navigation is a flat loop over a small set of states. The original expressed
-the same flow as pages calling each other — ``mode_selection_screen`` ran at
-import time, then each page invoked the next one from inside its own event
-loop, so "back" recursed instead of returning and the call stack grew for the
-whole session. Here every screen returns a value and this module decides what
-happens next.
+Navigation is a flat loop over a small set of states: every screen runs, returns
+a value, and exits, and this module alone decides what comes next. Screens never
+invoke one another, so "back" unwinds rather than nesting and a session can move
+between menus indefinitely without the call stack growing.
+
+Nothing here runs at import time. The window opens in :meth:`Application.run`
+and the camera only when an exercise actually starts, so importing any part of
+this package is free of side effects.
 """
 from __future__ import annotations
 

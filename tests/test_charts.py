@@ -1,8 +1,9 @@
 """Chart rendering.
 
 The charts are the clinician-facing output, so what is asserted here is mostly
-that a label always travels with the value it describes — the defect that made
-one of the original's two report paths mislabel every chart it drew.
+that a label always travels with the value it describes. A mislabelled chart
+renders perfectly and reads as authoritative, so nothing downstream would catch
+the mistake.
 """
 from __future__ import annotations
 
@@ -34,7 +35,7 @@ class TestSessionChart:
         assert len(png) > 5_000
 
     def test_writes_nothing_to_disk(self, tmp_path, monkeypatch):
-        """The original left stray plot_*.png files in the working directory."""
+        """Rendering must not touch the filesystem, on any path."""
         monkeypatch.chdir(tmp_path)
         session_chart(time_score(12))
         assert list(tmp_path.iterdir()) == []

@@ -1,8 +1,7 @@
 """Vision-based hand rehabilitation exercises with clinician reporting.
 
-Originally the practical component of a B.Sc. thesis in Biomedical Engineering
-(Amirkabir University of Technology, 2024), rebuilt from a set of duplicated
-scripts into a package.
+The practical component of a B.Sc. thesis in Biomedical Engineering, Amirkabir
+University of Technology.
 
 Layering, from the inside out:
 

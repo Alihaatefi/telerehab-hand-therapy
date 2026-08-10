@@ -1,17 +1,15 @@
 """Progress charts for clinicians.
 
-Three things the original did are corrected here:
+Three properties worth stating, since charts are the clinician-facing output:
 
-* Charts were rendered from labels re-typed by hand at each call site, and the
-  two modes' label lists were **swapped** in one of the two report paths — so
-  every chart reached through "Report by ID" mislabelled its axes. Labels now
-  come from :data:`telerehab.api.models.FIELD_MAP` alongside the values they
-  describe, so the two cannot disagree.
-* Plots were written as PNG files into the current working directory, displayed
-  by reading them back, then deleted — leaving stray ``plot_*.png`` behind on
-  any error path. They are now rendered straight into an in-memory buffer.
-* A patient with several sessions produced several files but only the last was
-  ever shown. All of them are returned.
+* Axis labels come from :data:`telerehab.api.models.FIELD_MAP` alongside the
+  values they describe, so a label cannot disagree with its bar. A mislabelled
+  chart is indistinguishable from a correct one at a glance, which makes this
+  the most consequential thing in the module.
+* Rendering goes straight to an in-memory buffer. Nothing is written to disk, so
+  no error path can leave stray files behind.
+* Functions return every chart they produce, not just the last one; a patient's
+  history is the point of the report.
 """
 from __future__ import annotations
 
@@ -67,8 +65,7 @@ def progress_chart(
 ) -> bytes:
     """One metric plotted across a patient's sessions over time.
 
-    This is the view the thesis argues for but never built: a single session
-    says little, whereas the trend across sessions is the actual clinical
+    A single session says little; the trend across sessions is the clinical
     signal. Requires all ``sessions`` to be from the same mode.
     """
     if not sessions:

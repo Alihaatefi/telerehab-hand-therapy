@@ -1,15 +1,13 @@
 """HTTP client for the tele-rehabilitation backend.
 
-Replaces the original ``crud.py``. Three things changed beyond tidying:
+Three properties this layer is expected to hold:
 
-1. **Errors are reported, not masked.** ``crud.py`` inspected ``response.text``
-   inside ``except RequestException``, but when the connection itself fails
-   ``response`` was never assigned — so "backend is down", the single most
-   likely failure in a home-rehabilitation setting, surfaced as
-   ``UnboundLocalError`` with no hint of the real cause.
-2. **One session, one base URL, one timeout.** The original hard-coded
-   ``http://localhost:3000`` at five separate call sites and set no timeout at
-   all, so an unreachable host hung the game loop indefinitely.
+1. **Every failure is reported as a** :class:`BackendError` **carrying a usable
+   message.** An unreachable backend is the single most likely failure in a
+   home-rehabilitation setting, so it must say so plainly rather than surfacing
+   as some incidental exception from deep in the stack.
+2. **One session, one base URL, one timeout.** Requests always time out, so an
+   unreachable host cannot hang the game loop.
 3. **Payload shape lives in** :mod:`telerehab.api.models`, not in UI callbacks.
 """
 from __future__ import annotations
@@ -79,8 +77,8 @@ class TeleRehabClient:
             raise BackendError(f"request to {url} failed: {exc}") from exc
 
         if response.status_code >= 400:
-            # Unlike the original, `response` is guaranteed bound here, so the
-            # server's own error body can be surfaced to the caller.
+            # Reached only when a response actually arrived, so the server's own
+            # error body is available and worth passing on to the caller.
             detail = response.text.strip()[:200] or response.reason
             raise BackendError(f"{method} {url} -> {response.status_code}: {detail}")
 
@@ -145,9 +143,9 @@ class TeleRehabClient:
     def sessions_for_patient(self, patient_id: int) -> list[Session]:
         """Every exercise session for one patient, oldest first.
 
-        The endpoint has no server-side filter, so this reads the collection and
-        filters client-side — as the original did. Fine at thesis scale; the
-        first thing to change if this were deployed.
+        The endpoint exposes no server-side filter, so this reads the collection
+        and filters client-side. Fine at the scale this was built for; the first
+        thing to change if it were deployed.
         """
         sessions = [
             session

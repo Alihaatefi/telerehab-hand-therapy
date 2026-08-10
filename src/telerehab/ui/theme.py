@@ -1,7 +1,7 @@
 """Colours, fonts and asset loading.
 
-The original repeated literal RGB tuples across six files; changing the accent
-colour meant finding forty call sites. Everything visual is named here.
+Every colour, font and asset lookup is named here, so a visual change is made in
+one place rather than hunted for across the screens that use it.
 """
 from __future__ import annotations
 
@@ -74,8 +74,8 @@ def _load_surface(path: Path) -> pygame.Surface:
 def image(name: str, size: tuple[int, int] | None = None) -> pygame.Surface:
     """Load an image from ``assets/images``, optionally scaled.
 
-    Results are cached, so drawing the same sprite every frame does not hit the
-    disk 30 times a second the way the original did on some screens.
+    Results are cached, so drawing the same sprite on every frame does not hit
+    the disk thirty times a second.
     """
     surface = _load_surface(IMAGES_DIR / name)
     surface = surface.convert_alpha() if pygame.display.get_init() else surface

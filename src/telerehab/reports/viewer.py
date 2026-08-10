@@ -14,10 +14,8 @@ from .charts import to_surface
 class ChartViewer(Screen[None]):
     """Pages through a list of rendered charts with the arrow keys.
 
-    The original showed charts by writing PNGs to the working directory,
-    blitting them, spinning in a ``while`` loop that only watched for QUIT, and
-    then deleting the file — so a patient with five sessions saw only the last
-    one, and any error left the files behind.
+    Charts arrive as PNG bytes and are decoded in memory, so browsing a
+    patient's history touches the filesystem not at all.
     """
 
     def __init__(self, ctx: Context, charts: Sequence[bytes], *, caption: str = ""):

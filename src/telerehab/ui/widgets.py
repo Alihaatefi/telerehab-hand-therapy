@@ -1,16 +1,15 @@
 """Reusable pygame widgets.
 
-The original defined ``draw_text``, ``draw_input_box`` and two incompatible
-button helpers separately in each game file, then decided what a click meant by
-polling ``pygame.mouse.get_pressed()`` *while drawing*. That has two
-consequences worth naming, because both are fixed here:
+Widgets are ordinary objects: constructed once, fed events, then drawn. Two
+consequences are deliberate.
 
-* A held mouse button re-fires the action on every frame — roughly thirty times
-  a second — so holding "Reset" over a dialog could trigger it repeatedly.
-* Button rectangles were created after the event loop that already referenced
-  them, so a click landing on the very first frame raised ``NameError``.
+Clicks are decided from the event queue, never by polling
+``pygame.mouse.get_pressed()`` during drawing. Polling reports a *held* button
+as pressed on every frame, which fires the action some thirty times a second.
 
-Widgets here are ordinary objects: constructed once, fed events, then drawn.
+A click means press *and* release inside the same widget, so pressing down and
+dragging away cancels — what users expect of a button, and a cheap guard against
+a mis-aimed press on a destructive action.
 """
 from __future__ import annotations
 

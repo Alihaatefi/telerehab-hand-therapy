@@ -111,9 +111,8 @@ class MovementCounter:
     of movements as the signal jitters across it. Two thresholds with a dead
     band between them mean the hand must genuinely travel to register.
 
-    The count increments on *every* transition in either direction, matching
-    the original thesis behaviour: one full open-and-close cycle counts as two
-    movements.
+    The count increments on *every* transition in either direction, so one full
+    open-and-close cycle counts as two movements.
     """
 
     def __init__(self, open_threshold: float = 70.0, close_threshold: float = 30.0):

@@ -137,7 +137,7 @@ class TestSessions:
 
 class TestFailureModes:
     def test_unreachable_backend_gives_an_actionable_message(self):
-        """The original raised UnboundLocalError here, hiding the real cause."""
+        """A refused connection must name the cause and the way out."""
         config = BackendConfig(base_url=f"http://127.0.0.1:{_free_port()}", timeout=0.5)
         with TeleRehabClient(config) as client:
             with pytest.raises(BackendError) as exc_info:

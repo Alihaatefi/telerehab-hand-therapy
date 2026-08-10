@@ -141,13 +141,13 @@ A stored row reading `heartRate: 14` is a game score, not a heart rate. This is
 a poor way to model clinical data and is documented rather than hidden, because
 it is what the deployed system does.
 
-What the refactor fixes is that the mapping now exists in exactly one place —
-`FIELD_MAP` in [`api/models.py`](../src/telerehab/api/models.py) — instead of
-being re-typed at four call sites. In the original, two of those sites
-disagreed: the "Report by ID" path paired Time/Score values with Open/Close
-labels, so every chart it drew was mislabelled. Because labels and values are
-now read from the same table, that class of defect cannot recur; the pairing is
-asserted in `tests/test_models.py`.
+Because the packing is invisible in the stored data — nothing about a row
+announces that its `heartRate` is a score — the mapping is declared in exactly
+one place, `FIELD_MAP` in [`api/models.py`](../src/telerehab/api/models.py), and
+every writer, reader and chart derives from it. Spelling it out per call site
+would let the two modes' labels drift apart, and a chart with the wrong axis
+label renders exactly as convincingly as one with the right label. The pairing
+is asserted in `tests/test_models.py`.
 
 Anyone extending this should migrate to a purpose-built endpoint.
 

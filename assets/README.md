@@ -18,9 +18,9 @@ runs the real MediaPipe pipeline over them to verify that the openness metrics
 separate the two postures by a margin wide enough to calibrate on. Replacing
 them will change what those tests assert.
 
-## Optimisation
+## Encoding
 
-The originals totalled 3.9 MB — 1024×1024 PNGs displayed at 800×600, sprites
-stored at 5× their drawn size, and a 24-bit 96 kHz stereo chime for a 0.68 s
-sound effect. Re-encoding to the sizes actually used brought that to 0.5 MB
-with no visible or audible difference.
+Each file is stored at the size it is actually drawn or played at, which keeps
+the whole set under 0.5 MB. Backgrounds are JPEG; the two sprites are PNG
+because they need an alpha channel; the chime is 16-bit mono at 44.1 kHz, which
+is indistinguishable from a higher-rate master for a 0.68 s sound effect.

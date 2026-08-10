@@ -1,12 +1,9 @@
 """Screen scaffolding and the generic screens shared by both modes.
 
-Navigation in the original worked by calling the next page *from inside* the
-current one — ``user_input_page()`` called ``sign_up_page()`` which called
-``user_input_page()`` again — so "going back" grew the call stack instead of
-unwinding it, and no page could ever return a value to its caller.
-
-Here a screen owns its own loop, returns a result, and exits. Deciding what
-comes next is :mod:`telerehab.app`'s job, in a flat loop.
+A screen owns its own loop, returns a result, and exits. Screens never call one
+another: deciding what comes next is :mod:`telerehab.app`'s job. That keeps
+"back" an ordinary return rather than another nested loop, and lets any screen
+hand a value — a patient id, a chosen mode, a finished session — to its caller.
 """
 from __future__ import annotations
 

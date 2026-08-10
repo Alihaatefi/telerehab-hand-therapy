@@ -86,11 +86,3 @@ links to the publisher's page.
     — Patient-acceptance evidence; the argument for a low-friction interface
     with no wearable hardware.
 
----
-
-## A note on the original folder
-
-The thesis working directory carried an `Articles/` folder holding these ten
-papers as PDFs, each duplicated with a `(1)` suffix — twenty files, ~19 MB.
-Those files are publisher-copyrighted and are deliberately excluded from this
-repository; this list replaces them.

@@ -2,10 +2,12 @@
 
 This module is the *only* place in the project that imports MediaPipe or
 OpenCV. Everything downstream works with :class:`HandSample`, which is plain
-Python data. That boundary matters more than it looks: MediaPipe removed the
-``mp.solutions`` API used here in releases after 0.10.14, so the pin in
-``requirements.txt`` is load-bearing. When that pin eventually has to move to
-the newer Tasks API, this file is the only one that changes.
+Python data.
+
+That boundary is load-bearing rather than decorative: MediaPipe removed the
+``mp.solutions`` API used here in releases after 0.10.14, which is why
+``requirements.txt`` pins that version exactly. When the pin has to move to the
+newer Tasks API, this file is the only one that changes.
 """
 from __future__ import annotations
 
@@ -60,8 +62,9 @@ class HandSample:
 class HandTracker:
     """Reads frames from a camera and extracts hand landmarks.
 
-    Use it as a context manager so the camera is always released — the original
-    code leaked the capture device on every error path::
+    Use it as a context manager so the camera is released on every exit path,
+    including exceptions — a leaked capture device stays locked until the
+    process dies, and the next run cannot open it::
 
         with HandTracker(VisionConfig()) as tracker:
             for sample in tracker.stream():

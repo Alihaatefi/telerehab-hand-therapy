@@ -3,10 +3,9 @@
 Both modes calibrate, but they ask different questions, so there are two
 screens over the two calibrators in :mod:`telerehab.vision.calibration`.
 
-The original ran calibration inside a bare ``while`` loop that showed the
-camera in a separate OpenCV window (``cv2.imshow``) while drawing the countdown
-into the pygame window — two windows, one of which ignored the close button.
-Both screens here render the camera feed inside the game window.
+Both render the camera feed inside the game window rather than in a separate
+OpenCV window, so the patient sees their hand and the instructions together and
+there is only one window to close.
 """
 from __future__ import annotations
 

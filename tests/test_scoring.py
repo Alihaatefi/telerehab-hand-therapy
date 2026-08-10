@@ -164,7 +164,7 @@ class TestHoldTimer:
         assert timer.elapsed == pytest.approx(2.0)
 
     def test_a_brief_slip_pauses_rather_than_erases_progress(self):
-        """The original reset to zero here, punishing a momentary wobble."""
+        """A momentary wobble must not erase an accumulated hold."""
         clock = FakeClock()
         timer = HoldTimer(duration=5.0, clock=clock)
 
@@ -232,7 +232,7 @@ class TestCountdownTimer:
         assert timer.remaining == pytest.approx(40.0)
 
     def test_survives_repeated_pauses(self):
-        """The original dropped time whenever a pause overlapped another."""
+        """Repeated pauses must not quietly consume exercise time."""
         clock = FakeClock()
         timer = CountdownTimer(duration=60.0, clock=clock)
 

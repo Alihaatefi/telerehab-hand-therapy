@@ -17,11 +17,12 @@
 
    This is a poor way to model clinical data. It is preserved because it is what
    the deployed system actually does, and inventing a cleaner schema here would
-   misrepresent the work. What the refactor *does* fix is that the mapping now
-   exists exactly once, in :data:`FIELD_MAP` below, instead of being re-derived
-   by hand at each of the four call sites — where the original code had the two
-   modes' labels swapped in one of the two report paths, silently mislabelling
-   every chart produced by that path.
+   misrepresent the work.
+
+   The mapping is therefore declared exactly once, in :data:`FIELD_MAP` below,
+   and every writer, reader and chart derives from it. Re-deriving it by hand at
+   each call site invites the two modes' labels to drift apart, which mislabels
+   charts silently — a wrong axis label looks exactly like a right one.
 
    Anyone extending this project should migrate to a purpose-built endpoint.
 """
@@ -185,9 +186,10 @@ class Session:
         """Unpack a stored vital-signs row, or ``None`` if it is not a session.
 
         The ``/vital-signs`` resource is shared with genuine clinical readings
-        from other parts of the platform, so rows whose ``painScale`` is not a
-        known game mode are skipped rather than misinterpreted. The original
-        code raised ``NameError`` on those rows in one of its two report paths.
+        written by other parts of the platform. Rows whose ``painScale`` is not
+        a known game mode are therefore skipped rather than misinterpreted —
+        reading a real pain score as a game mode would produce a chart that
+        looks perfectly plausible and is entirely wrong.
         """
         try:
             mode = GameMode(int(payload.get("painScale", -1)))
@@ -236,10 +238,10 @@ def new_patient_payload(
 ) -> dict[str, Any]:
     """Build a ``/patients`` creation payload.
 
-    The original built an address as ``f"{name} + @telerahab.com"``, keeping the
-    literal ``' + '`` in it, and sent the patient's age in ``phoneNumber``.
-    Both are corrected here; contact fields the game does not collect are simply
-    omitted rather than filled with invented values.
+    The e-mail address is synthesised from the name because the exercise app has
+    no reason to ask a patient for one. Contact fields the app does not collect
+    are omitted rather than filled with invented values — a placeholder phone
+    number in a patient record is worse than an absent one.
     """
     slug = "".join(ch for ch in f"{first_name}{last_name}".lower() if ch.isalnum())
     return {

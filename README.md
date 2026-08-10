@@ -5,9 +5,8 @@ clinician-facing progress reports.** No wearable hardware: a laptop camera,
 MediaPipe hand tracking, and two exercises designed around what a recovering
 hand can actually do.
 
-Built as the practical component of a B.Sc. thesis in Biomedical Engineering
-(Amirkabir University of Technology, September 2024), then rebuilt from the
-submitted scripts into the package documented here.
+The practical component of a B.Sc. thesis in Biomedical Engineering, Amirkabir
+University of Technology.
 
 <p align="center">
   <img src="docs/media/demo-time-score.gif" width="49%" alt="Time/Score mode: the butterfly follows hand openness and scores by settling on the flower">
@@ -85,6 +84,13 @@ $ python -m telerehab --check
 Useful flags: `--api-url URL`, `--camera N`, `--verbose`.
 `python mock_server/server.py --reset` empties the demo store.
 
+> **On the MediaPipe pin.** `requirements.txt` pins `mediapipe==0.10.14` exactly.
+> Later releases removed the `mp.solutions` API this project is built on, and
+> 0.10.14 is also the last release published with CPython 3.12 wheels. All
+> MediaPipe access is confined to
+> [`vision/hand_tracker.py`](src/telerehab/vision/hand_tracker.py), so moving to
+> the newer Tasks API is a single-file change.
+
 ## About the backend
 
 The system this was written against is a general-purpose clinical platform
@@ -109,10 +115,11 @@ exercise the row came from.
 
 This is a poor way to model clinical data. It is documented rather than hidden
 because it is what the deployed system actually does, and inventing a cleaner
-schema here would misrepresent the work. The mapping is now confined to one
-table — `FIELD_MAP` in [`api/models.py`](src/telerehab/api/models.py) — which
-is itself a fix: the original re-typed it at four call sites, and two of them
-disagreed. See [the data-model section](docs/architecture.md#data-model-and-its-known-compromise).
+schema here would misrepresent the work. The mapping is confined to a single
+table — `FIELD_MAP` in [`api/models.py`](src/telerehab/api/models.py) — so a
+label can never drift out of sync with the value it describes, and the pairing
+is asserted in the test suite. See
+[the data-model section](docs/architecture.md#data-model-and-its-known-compromise).
 
 ## Layout
 
@@ -135,7 +142,6 @@ src/telerehab/
 
 mock_server/server.py    dependency-free stand-in for the clinical backend
 tests/                   102 tests
-legacy/                  the original scripts, as submitted
 docs/                    architecture, references
 ```
 
@@ -160,48 +166,6 @@ Two suites go further than unit tests:
   reference photographs in `assets/`, checking the assumption the whole
   application rests on: that these metrics separate an open hand from a closed
   one, by a wide enough margin to calibrate on.
-
-## About this repository
-
-The thesis was written and submitted without version control. The code that was
-handed in consisted of six near-duplicate scripts (`Game27.py` … `Game33.py`)
-plus two API wrappers — about 2,900 lines, roughly 70% duplicated. Versioning
-was by copying the file and bumping a number.
-
-Rather than quietly reconstructing a history that never existed, the first
-commit here is that code exactly as submitted, tagged
-[`v0.1-thesis-submission`](../../releases/tag/v0.1-thesis-submission) and kept
-in [`legacy/`](legacy/). Everything after it is the refactor, with today's
-dates.
-
-What that refactor found and fixed, beyond the restructuring:
-
-| | Defect in the submitted code |
-|---|---|
-| 1 | `crud.py` read `response.text` inside `except RequestException`, but `response` is unbound when the connection fails — so *"backend is down"*, the likeliest failure in home use, surfaced as `UnboundLocalError` |
-| 2 | `show_game_over_window` called `int(result.get("id"))` before checking `if result:` — a guaranteed crash whenever a save failed |
-| 3 | Three screens read their button rectangles one statement *before* those rectangles were assigned; a click on the first frame raised `NameError` |
-| 4 | Chart labels for the two modes were swapped in one of the two report paths, mislabelling every chart drawn through it |
-| 5 | `show_vital_number` had no `else` branch for unexpected `painScale` values → `NameError` on rows written by other parts of the platform |
-| 6 | A patient with several sessions produced several charts, but only the last was ever displayed |
-| 7 | `user_input_page` and `sign_up_page` called *themselves* to go back, growing the stack on every navigation |
-| 8 | Buttons fired from `mouse.get_pressed()` during drawing, so a held click repeated the action ~30×/second |
-| 9 | The sign-up payload sent the patient's age in `phoneNumber` and built an email as `f"{name} + @telerahab.com"`, literal `' + '` included |
-| 10 | `reset_game`, `show_confirmation_dialog` and `settings_page` were each defined **twice** in `Game33.py`; the second silently shadowed the first (~120 dead lines) |
-| 11 | Plots were written into the working directory, read back, then deleted — leaving stray `plot_*.png` on every error path |
-| 12 | Resuming from pause adjusted the start time in a way that lost time whenever pauses overlapped |
-| 13 | A single wrong-posture frame reset the Open/Close hold timer to zero, erasing a patient's accumulated hold for one wobble |
-
-Two behaviours were changed deliberately rather than fixed: the hold timer now
-pauses instead of resetting (13), and openness is clamped to the calibrated
-range instead of extrapolating. Both are noted in the code.
-
-One constraint is worth flagging for anyone cloning this: MediaPipe removed the
-`mp.solutions` API this project uses in releases after **0.10.14**, which is
-also the last release with CPython 3.12 wheels — hence the exact pin. All
-MediaPipe access is confined to
-[`vision/hand_tracker.py`](src/telerehab/vision/hand_tracker.py), so moving to
-the newer Tasks API is a single-file change.
 
 ## Thesis
 

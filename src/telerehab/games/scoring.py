@@ -133,11 +133,10 @@ class FlowerTarget:
 class HoldTimer:
     """Accumulates time spent in the *correct* hand posture.
 
-    Open/Close mode asks the patient to hold a posture for N seconds. The
-    original implementation reset its start time on every wrong-posture frame,
-    which means a patient who wobbles once loses all accumulated credit and
-    starts the hold from zero. This version pauses instead of resetting, so
-    progress is preserved across a brief slip.
+    Open/Close mode asks the patient to hold a posture for N seconds. A wrong
+    posture *pauses* the accumulation rather than resetting it: erasing an
+    accumulated hold because of one momentary wobble is a poor property for an
+    exercise aimed at people with movement disorders.
     """
 
     def __init__(self, duration: float, clock: Clock):
@@ -185,9 +184,9 @@ class HoldTimer:
 class CountdownTimer:
     """A wall-clock countdown that can be paused without losing time.
 
-    The original added the paused duration back onto ``start_time`` on resume,
-    which works until the game is paused twice, or paused while a dialog is
-    open — both of which drop time on the floor.
+    Pausing records the moment it happened and resuming shifts the start time by
+    exactly that gap, so repeated pauses, or a pause spanning a dialog, cost the
+    patient no exercise time.
     """
 
     def __init__(self, duration: float, clock: Clock):

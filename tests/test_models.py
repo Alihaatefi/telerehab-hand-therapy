@@ -22,7 +22,7 @@ class TestFieldMap:
         assert set(FIELD_MAP) == set(GameMode)
 
     def test_the_two_modes_do_not_share_labels(self):
-        """The original swapped these between its two report paths."""
+        """Disjoint label sets are what keeps the two modes unconfusable."""
         time_score = {f.label for f in FIELD_MAP[GameMode.TIME_SCORE]}
         open_close = {f.label for f in FIELD_MAP[GameMode.OPEN_CLOSE]}
         assert not (time_score & open_close)
@@ -153,7 +153,7 @@ class TestPatient:
 
 class TestPatientPayload:
     def test_builds_a_valid_email(self):
-        """The original produced 'Ali + @telerahab.com', spaces and all."""
+        """A synthesised address still has to be a valid one."""
         payload = new_patient_payload(1, "Ali", "Hatefi", "1990-01-01T00:00:00.000Z")
         assert payload["email"] == "alihatefi@telerehab.local"
         assert " " not in payload["email"]
