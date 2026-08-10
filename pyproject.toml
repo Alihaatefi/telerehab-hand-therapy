@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telerehab-hand-therapy"
+version = "1.0.0"
+description = "Vision-based hand rehabilitation game with clinician reporting"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10,<3.13"
+authors = [{ name = "Ali Hatefi", email = "a.hatefi.research@gmail.com" }]
+keywords = ["telerehabilitation", "computer-vision", "mediapipe", "biofeedback"]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+
+dependencies = [
+    # MediaPipe removed the `mp.solutions` API this project uses in releases
+    # after 0.10.14, and 0.10.14 is the last release with CPython 3.12 wheels.
+    # All MediaPipe access is confined to telerehab/vision/hand_tracker.py, so
+    # migrating to the newer Tasks API is a single-file change.
+    "mediapipe==0.10.14",
+    "opencv-python>=4.8",
+    "pygame>=2.5",
+    "numpy>=1.24",
+    "requests>=2.31",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+telerehab = "telerehab.__main__:main"
+
+[project.urls]
+Repository = "https://github.com/alihatefi/telerehab-hand-therapy"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "vision: exercises the real MediaPipe pipeline (slow, needs the model)",
+]

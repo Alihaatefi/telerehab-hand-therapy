@@ -1,0 +1,16 @@
+# Runtime dependencies. Requires Python 3.10-3.12.
+#
+# MediaPipe removed the `mp.solutions` API this project uses in releases after
+# 0.10.14, and 0.10.14 is also the last release published with CPython 3.12
+# wheels - hence the exact pin rather than a range. All MediaPipe access is
+# confined to src/telerehab/vision/hand_tracker.py, so migrating to the newer
+# Tasks API is a single-file change.
+mediapipe==0.10.14
+
+opencv-python>=4.8
+pygame>=2.5
+numpy>=1.24
+requests>=2.31
+matplotlib>=3.7
+
+# Development / test extras:  pip install -r requirements-dev.txt
