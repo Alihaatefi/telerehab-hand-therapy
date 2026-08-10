@@ -9,7 +9,7 @@ description = "Vision-based hand rehabilitation game with clinician reporting"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10,<3.13"
-authors = [{ name = "Ali Hatefi", email = "a.hatefi.research@gmail.com" }]
+authors = [{ name = "Ali Hatefi", email = "alihatefi002@gmail.com" }]
 keywords = ["telerehabilitation", "computer-vision", "mediapipe", "biofeedback"]
 classifiers = [
     "Programming Language :: Python :: 3.12",
