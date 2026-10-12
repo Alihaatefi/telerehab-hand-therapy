@@ -30,3 +30,4 @@ reports_out/
 # Local configuration (may contain a real backend URL or token)
 .env
 config.local.toml
+graphify-out/
