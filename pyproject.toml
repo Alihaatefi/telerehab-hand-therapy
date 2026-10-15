@@ -9,9 +9,13 @@ description = "Vision-based hand rehabilitation exercises with clinician reporti
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10,<3.13"
-authors = [{ name = "Ali Hatefi", email = "alihatefi002@gmail.com" }]
+authors = [{ name = "Ali Hatefi", email = "a.hatefi.research@gmail.com" }]
 keywords = ["telerehabilitation", "computer-vision", "mediapipe", "biofeedback", "pyside6"]
 classifiers = [
+    # Proprietary, evaluation-only: see LICENSE. "Do Not Upload" makes PyPI refuse
+    # an accidental upload of a package that must not be redistributed.
+    "License :: Other/Proprietary License",
+    "Private :: Do Not Upload",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

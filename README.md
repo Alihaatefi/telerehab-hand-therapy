@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Alihaatefi/telerehab-hand-therapy/actions/workflows/ci.yml/badge.svg)](https://github.com/Alihaatefi/telerehab-hand-therapy/actions/workflows/ci.yml)
 ![Python 3.10-3.12](https://img.shields.io/badge/python-3.10%E2%80%933.12-blue)
-![License: MIT](https://img.shields.io/badge/license-MIT-green)
+![License: evaluation only](https://img.shields.io/badge/license-evaluation%20only-red)
 
 **Webcam-based hand rehabilitation exercises with per-patient calibration and
 clinician-facing progress reports.** No wearable hardware: a laptop camera,
@@ -11,6 +11,11 @@ hand can actually do.
 
 The practical component of a B.Sc. thesis in Biomedical Engineering, Amirkabir
 University of Technology.
+
+> **License: all rights reserved.** This repository is published for evaluation
+> and presentation only. You may read it and run the unmodified software to
+> evaluate it; you may not copy, redistribute, modify or build on it without
+> written permission. See [License](#license).
 
 <p align="center">
   <img src="docs/media/demo-time-score.gif" width="49%" alt="Time/Score: the butterfly follows hand openness and scores by settling on the flower">
@@ -260,15 +265,25 @@ redistributed here. Literature surveyed is listed in
 
 ## License
 
-Source code is MIT-licensed - see [LICENSE](LICENSE).
+Copyright (c) 2024-2026 Ali Hatefi, Amirkabir University of Technology, and
+Mohammad Ali Ahmadi-Pajouh. All rights reserved.
 
-The MIT license covers the code only. It does not extend to the thesis document,
-to the third-party backend described above, or to the papers listed in
-`docs/references.md`. The reference photographs and the chime in
-`src/telerehab/resources/` are released under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The scene, butterfly,
-flower, mark and icons are drawn in code and are MIT-licensed; icon glyphs follow
-the Feather/Lucide sets - see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The code, documentation, figures, recordings and results are published under an
+**Evaluation and Presentation License** - see [LICENSE](LICENSE). In short, you
+may read them, run the unmodified software on your own computer to evaluate it,
+and quote or show unmodified excerpts and screenshots with credit. You may not
+copy, redistribute, modify or build on them, use them in a product, service,
+course or research project, use them to train AI systems, or use the software with
+real patients, unless you have written permission.
+
+To ask for permission, write to **a.hatefi.research@gmail.com**.
+
+This is not an open-source license. It does not extend to the thesis document, to
+the third-party backend described above, or to the papers listed in
+`docs/references.md`, and it does not change the licenses of the third-party
+components the software uses - see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Versions before 2.0.0 were
+published under the MIT License; that is not withdrawn for those versions.
 
 ## Author
 

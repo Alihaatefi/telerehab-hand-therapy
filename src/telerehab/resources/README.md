@@ -26,6 +26,7 @@ asked for.
 
 ## Licence
 
-The photographs and the chime were produced for the thesis and are released under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See `LICENSE` and
-`THIRD_PARTY_NOTICES.md` for everything else.
+The photographs and the chime were produced for the thesis and are covered by the
+Evaluation and Presentation License in `LICENSE`. (An earlier version of this
+project described them as CC BY 4.0; copies obtained under that description keep
+the rights it gave.) See `THIRD_PARTY_NOTICES.md` for third-party components.

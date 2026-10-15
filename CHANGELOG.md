@@ -36,6 +36,9 @@ that the thesis describes are unchanged; everything around them was rebuilt.
 
 ### Changed
 
+- **License.** Version 2.0.0 and later are published under an Evaluation and
+  Presentation License (see `LICENSE`) instead of the MIT License. Rights already
+  granted under the MIT License for earlier versions are not withdrawn.
 - **Exercise rules moved out of the screens.** `TimeScoreEngine`,
   `OpenCloseEngine` and the two calibration tasks are plain classes with an
   injectable clock; the logic is the same, but a whole session can now be played

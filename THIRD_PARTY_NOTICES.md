@@ -1,7 +1,9 @@
 # Third-party notices
 
-This project's own code is MIT-licensed (see `LICENSE`). It depends on, and in
-one case borrows conventions from, the following.
+This project's own code and materials are covered by the Evaluation and
+Presentation License in `LICENSE`. That license does not apply to, and does not
+change the licenses of, the third-party components below, which it depends on or
+borrows conventions from.
 
 ## Icons
 
@@ -51,7 +53,7 @@ paths are derived from them, so their notices are reproduced here.
 > PERFORMANCE OF THIS SOFTWARE.
 
 The application mark, the garden scene, the butterfly and the flower are
-original, drawn in code, and covered by this project's MIT license.
+original, drawn in code, and covered by this project's license (`LICENSE`).
 
 ## Runtime dependencies
 
@@ -66,9 +68,10 @@ Installed from PyPI; not redistributed in this repository.
 | [Requests](https://requests.readthedocs.io/) | Apache-2.0 | the backend client |
 
 PySide6 is licensed under the LGPL: it is used here as an unmodified, dynamically
-linked library, which that licence permits for MIT-licensed applications.
-Anyone redistributing a bundled build (for example with PyInstaller) should read
-the LGPL terms for Qt.
+linked library, which that licence permits for applications under other licences.
+Redistributing a bundled build (for example with PyInstaller) is outside what
+`LICENSE` allows; anyone given permission to do so should also read the LGPL
+terms for Qt.
 
 ## Not included
 

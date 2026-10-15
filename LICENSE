@@ -1,32 +1,113 @@
-MIT License
+TeleRehab - Hand Therapy
+EVALUATION AND PRESENTATION LICENSE, version 1.0
 
-Copyright (c) 2024-2026 Ali Hatefi
+Copyright (c) 2024-2026 Ali Hatefi, Amirkabir University of Technology, and
+Mohammad Ali Ahmadi-Pajouh. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This is NOT an open-source license. The Materials are published so that they can
+be read, evaluated and presented - not so that they can be reused.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+IN SHORT
 
----
+  You may    read them, run the unmodified software on your own computer to
+             evaluate it, and quote or show unmodified excerpts, screenshots
+             and recordings with credit, to review or report on the work.
+  You may not  copy or redistribute them, change them, build on them, use them
+             in any product, service, course or research project, use them to
+             train AI or machine-learning systems, or use the software with
+             real patients - unless you have written permission.
 
-SCOPE
+Permission requests: a.hatefi.research@gmail.com
 
-This license covers the source code in this repository.
+The sections below are the binding terms; this summary is only a guide.
 
-It does not extend to:
+
+1. THE MATERIALS
+
+"Materials" means everything in this repository at version 2.0.0 or later: the
+source code, tests, documentation, figures, screenshots, recordings, reference
+photographs, the scoring chime, sample data and results. "Holders" means the
+copyright holders named above.
+
+"You" means anyone who obtains the Materials.
+
+
+2. WHAT YOU MAY DO
+
+Free of charge, and only for the purposes below, you may:
+
+  (a) read, browse and review the Materials, and keep the local copies needed
+      for that;
+
+  (b) install and run the software, unmodified, on your own computer for the
+      sole purpose of evaluating it - for example to examine or assess the thesis
+      it accompanies, to take part in an academic review, or to assess the
+      author's work in connection with study, an application or recruitment;
+
+  (c) attend, and take part in, a presentation or demonstration of the work given
+      by or with the permission of the Holders;
+
+  (d) quote short excerpts, and share unmodified screenshots, figures and
+      recordings, with credit to the authors and a link to this repository, in
+      order to review, discuss, criticise, report on or cite the work.
+
+These permissions are non-exclusive, non-transferable and revocable (section 7).
+
+
+3. WHAT YOU MAY NOT DO
+
+Without the written permission of the Holders, you may not:
+
+  (a) modify, adapt, translate or create derivative works of the Materials, or
+      build anything on or from them;
+
+  (b) copy, publish, host, mirror, redistribute, sublicense, sell, rent or lend
+      the Materials, or any part of them, or make them available to anyone else,
+      except as section 2(d) allows;
+
+  (c) use the Materials, or any part of them, in or for any product, service,
+      course, publication, research project or other commercial, educational or
+      institutional activity;
+
+  (d) use the Materials to train, fine-tune or evaluate any machine-learning or
+      artificial-intelligence system, or to build any dataset;
+
+  (e) use the software with real patients, or in any clinical or healthcare
+      setting;
+
+  (f) remove or alter any copyright, license or attribution notice;
+
+  (g) use the names of the authors, the university or the supervisor to endorse
+      or promote anything.
+
+Platform features. If the Materials are hosted on a platform whose terms let
+users view and fork public repositories (such as GitHub), nothing here limits the
+rights you have under those terms to view and fork this repository using the
+platform's own functionality. A fork or copy made that way remains subject to
+this license and gives you no further rights.
+
+
+4. ANYTHING ELSE
+
+Any use not listed in section 2 needs the written permission of the Holders.
+Requests are handled on their behalf at a.hatefi.research@gmail.com. The Holders
+may refuse a request, or grant it on conditions.
+
+All rights not expressly granted are reserved.
+
+
+5. EARLIER VERSIONS
+
+Versions of this software before 2.0.0 were published under the MIT License.
+This license does not take away any rights that the MIT License already gave to
+people who received those earlier versions - including for any code that appears
+unchanged in both. This license governs version 2.0.0 and later.
+
+
+6. SCOPE, AND THIRD-PARTY COMPONENTS
+
+This license does not extend to, and does not change the licenses of:
 
   * The B.Sc. thesis document, which is copyright Amirkabir University of
     Technology and is not distributed here.
@@ -36,19 +117,34 @@ It does not extend to:
     client's observable contract.
   * The academic papers listed in docs/references.md, which are copyright their
     respective publishers and are not distributed here.
+  * The third-party components the software depends on or borrows from - PySide6,
+    MediaPipe, OpenCV, NumPy, Requests and the Feather/Lucide icon glyphs. Each
+    remains under its own license; see THIRD_PARTY_NOTICES.md. Nothing in this
+    license restricts what those licenses allow you to do with those components
+    themselves.
 
-The reference photographs and the scoring chime under src/telerehab/resources/
-were produced for the thesis and are released under Creative Commons
-Attribution 4.0 International (CC BY 4.0):
-https://creativecommons.org/licenses/by/4.0/
 
-The exercise scene (garden, butterfly, flower), the application mark and the
-interface icons are drawn in code and are covered by the MIT license above. The
-icon glyphs follow the Feather/Lucide set (ISC license); see
-THIRD_PARTY_NOTICES.md.
+7. TERMINATION
 
-MEDICAL DISCLAIMER
+Your permissions end automatically if you break any of these terms. The Holders
+may also end them at any time by written notice. When they end, you must stop
+using the Materials and delete your copies.
 
-This software is a research prototype produced for an undergraduate thesis. It
-is not a medical device, has not been clinically validated, and must not be
-used to diagnose, treat, or make clinical decisions about any patient.
+
+8. NO WARRANTY, NO LIABILITY
+
+THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+MATERIALS OR THEIR USE.
+
+If any part of this license is found unenforceable, the rest remains in effect.
+
+
+9. MEDICAL DISCLAIMER
+
+This software is a research prototype produced for an undergraduate thesis. It is
+not a medical device, has not been clinically validated, and must not be used to
+diagnose, treat, or make clinical decisions about any patient.
