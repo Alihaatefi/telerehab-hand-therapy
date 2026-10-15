@@ -17,11 +17,18 @@ University of Technology.
 > evaluate it; you may not copy, redistribute, modify or build on it without
 > written permission. See [License](#license).
 
+**Time / Score, start to finish** - choose, set up, calibrate, play, save, report:
+
 <p align="center">
-  <img src="docs/media/demo-time-score.gif" width="49%" alt="Time/Score: the butterfly follows hand openness and scores by settling on the flower">
-  <img src="docs/media/demo-open-close.gif" width="49%" alt="Open/Close: timed posture holds, with the target posture shown by the flower">
+  <img src="docs/media/demo-time-score.gif" width="92%" alt="A whole Time/Score session: set up, calibrate, steer the butterfly onto the flower to score, then see the saved report">
 </p>
-<p align="center"><sub>Left: Time/Score. Right: Open/Close. Recorded from the running application with its built-in demo camera.</sub></p>
+
+**Open / Close, start to finish** - the flower shows the posture to hold; the timer pauses on a wobble:
+
+<p align="center">
+  <img src="docs/media/demo-open-close.gif" width="92%" alt="A whole Open/Close session: set up, capture the open and closed postures, hold each one, then see the saved report">
+</p>
+<p align="center"><sub>Recorded from the running application with its built-in demo camera, which poses a simulated hand the way a patient would.</sub></p>
 
 > **No webcam? No problem.** `python -m telerehab --demo` replaces the camera with a
 > simulated hand, so the whole application can be tried on any computer.
