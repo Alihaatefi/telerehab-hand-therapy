@@ -37,9 +37,15 @@ It does not extend to:
   * The academic papers listed in docs/references.md, which are copyright their
     respective publishers and are not distributed here.
 
-Game artwork and audio under assets/ were produced for the thesis and are
-released under Creative Commons Attribution 4.0 International (CC BY 4.0):
+The reference photographs and the scoring chime under src/telerehab/resources/
+were produced for the thesis and are released under Creative Commons
+Attribution 4.0 International (CC BY 4.0):
 https://creativecommons.org/licenses/by/4.0/
+
+The exercise scene (garden, butterfly, flower), the application mark and the
+interface icons are drawn in code and are covered by the MIT license above. The
+icon glyphs follow the Feather/Lucide set (ISC license); see
+THIRD_PARTY_NOTICES.md.
 
 MEDICAL DISCLAIMER
 
