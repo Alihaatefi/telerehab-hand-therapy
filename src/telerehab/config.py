@@ -11,11 +11,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
-PROJECT_ROOT = PACKAGE_ROOT.parents[1]
-ASSETS_DIR = PROJECT_ROOT / "assets"
 
-IMAGES_DIR = ASSETS_DIR / "images"
-SOUNDS_DIR = ASSETS_DIR / "sounds"
+#: Everything the application ships with lives inside the package, so an
+#: installed copy finds its files exactly as a source checkout does.
+RESOURCES_DIR = PACKAGE_ROOT / "resources"
+REFERENCE_DIR = RESOURCES_DIR / "reference"
+SOUNDS_DIR = RESOURCES_DIR / "sounds"
 
 DEFAULT_BASE_URL = "http://localhost:3000"
 
@@ -34,7 +35,7 @@ class BackendConfig:
     doctor_id: int = 1
 
     @classmethod
-    def from_env(cls) -> "BackendConfig":
+    def from_env(cls) -> BackendConfig:
         return cls(
             base_url=os.environ.get("TELEREHAB_API_URL", DEFAULT_BASE_URL).rstrip("/"),
             token=os.environ.get("TELEREHAB_API_TOKEN") or None,
@@ -58,20 +59,30 @@ class VisionConfig:
     open_threshold: float = 70.0
     close_threshold: float = 30.0
 
+    #: Use the simulated hand (morphing between the two reference photographs)
+    #: instead of a physical camera. For demos, screenshots and machines with
+    #: no webcam.
+    demo: bool = False
+
+
+#: Width of the Time/Score track in logical units. The exercise always works on
+#: a track this wide whatever size the window is drawn at, so difficulty does
+#: not change when the window is resized.
+TRACK_WIDTH = 800
+
 
 @dataclass(frozen=True)
 class GameConfig:
-    """Defaults for both exercise modes. All of these are editable in-game."""
+    """Defaults for both exercise modes. All of these are editable in-app."""
 
-    window_size: tuple[int, int] = (900, 700)
     fps: int = 30
 
     # Time/Score mode
     exercise_seconds: int = 60
     gain: float = 1.0
     calibration_seconds: int = 5
-    #: How close (px) the butterfly must be to the flower, and for how long (s),
-    #: before a point is scored.
+    #: How close the butterfly must be to the flower (in track units, see
+    #: :data:`TRACK_WIDTH`), and for how long (s), before a point is scored.
     flower_tolerance_px: int = 50
     flower_dwell_seconds: float = 0.5
     #: Number of samples in the moving average that smooths butterfly motion.

@@ -15,10 +15,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "mock_server"))
 
-from server import Store, build_server  # noqa: E402
+from server import Store, build_server
 
-from telerehab.api import BackendError, GameMode, Session, TeleRehabClient  # noqa: E402
-from telerehab.config import BackendConfig  # noqa: E402
+from telerehab.api import BackendError, GameMode, Session, TeleRehabClient
+from telerehab.config import BackendConfig
 
 
 def _free_port() -> int:
@@ -139,9 +139,8 @@ class TestFailureModes:
     def test_unreachable_backend_gives_an_actionable_message(self):
         """A refused connection must name the cause and the way out."""
         config = BackendConfig(base_url=f"http://127.0.0.1:{_free_port()}", timeout=0.5)
-        with TeleRehabClient(config) as client:
-            with pytest.raises(BackendError) as exc_info:
-                client.create_patient("Ali")
+        with TeleRehabClient(config) as client, pytest.raises(BackendError) as exc_info:
+            client.create_patient("Ali")
 
         message = str(exc_info.value)
         assert "cannot reach the backend" in message
@@ -154,3 +153,15 @@ class TestFailureModes:
 
     def test_ping_is_true_when_up(self, client):
         assert client.ping() is True
+
+    def test_an_error_response_carries_its_http_status(self, client):
+        """Callers branch on the status, not on a substring of the message."""
+        with pytest.raises(BackendError) as exc_info:
+            client._request("GET", "/no-such-route")
+        assert exc_info.value.status_code == 404
+
+    def test_a_failure_before_any_response_has_no_status(self):
+        config = BackendConfig(base_url=f"http://127.0.0.1:{_free_port()}", timeout=0.5)
+        with TeleRehabClient(config) as client, pytest.raises(BackendError) as exc_info:
+            client.get_patient(1)
+        assert exc_info.value.status_code is None

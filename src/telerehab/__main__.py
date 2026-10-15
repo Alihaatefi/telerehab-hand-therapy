@@ -5,8 +5,9 @@ import argparse
 import logging
 import sys
 from dataclasses import replace
+from typing import Any
 
-from .config import BackendConfig, load_settings
+from .config import load_settings
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -16,10 +17,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--api-url", metavar="URL",
-        help="backend base URL (default: $TELEREHAB_API_URL or http://localhost:3000)",
+        help="backend base URL (default: $TELEREHAB_API_URL, the saved setting, or http://localhost:3000)",
     )
     parser.add_argument(
-        "--camera", type=int, metavar="N", help="camera index (default: 0)"
+        "--camera", type=int, metavar="N", help="camera index (default: the saved setting, or 0)"
+    )
+    parser.add_argument(
+        "--demo", action="store_true",
+        help="use a simulated hand instead of a camera (for demos and computers with no webcam)",
     )
     parser.add_argument(
         "--check", action="store_true",
@@ -45,19 +50,26 @@ def _check(settings) -> int:
             print(f"[fail] backend      {settings.backend.base_url} unreachable")
             print("       start it with: python mock_server/server.py --seed")
 
+    name = "demo camera" if settings.vision.demo else f"camera {settings.vision.camera_index}"
     try:
-        from .vision.hand_tracker import HandTracker
+        tracker: Any
+        if settings.vision.demo:
+            from .vision.demo import DemoTracker
 
-        with HandTracker(settings.vision) as tracker:
+            tracker = DemoTracker(settings.vision, realtime=False)
+        else:
+            from .vision.hand_tracker import HandTracker
+
+            tracker = HandTracker(settings.vision)
+        with tracker:
             sample = tracker.read()
         print(
-            f"[ ok ] camera {settings.vision.camera_index}     "
-            f"{sample.frame.shape[1]}x{sample.frame.shape[0]}"
+            f"[ ok ] {name:<12}{sample.frame.shape[1]}x{sample.frame.shape[0]}"
             + ("  (hand detected)" if sample.has_hand else "")
         )
     except Exception as exc:
         ok = False
-        print(f"[fail] camera {settings.vision.camera_index}     {exc}")
+        print(f"[fail] {name:<12}{exc}")
 
     return 0 if ok else 1
 
@@ -70,22 +82,28 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     settings = load_settings()
+    pinned: set[str] = set()
     if args.api_url:
         settings = replace(
             settings,
             backend=replace(settings.backend, base_url=args.api_url.rstrip("/")),
         )
+        pinned.add("api_url")
     if args.camera is not None:
         settings = replace(
             settings, vision=replace(settings.vision, camera_index=args.camera)
         )
+        pinned.add("camera")
+    if args.demo:
+        settings = replace(settings, vision=replace(settings.vision, demo=True))
+        pinned.add("demo")
 
     if args.check:
         return _check(settings)
 
-    from .app import run
+    from .ui.app import run
 
-    return run(settings)
+    return run(settings, pinned=pinned)
 
 
 if __name__ == "__main__":

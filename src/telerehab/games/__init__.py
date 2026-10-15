@@ -1,8 +1,11 @@
 """The two exercise modes and the rules behind them.
 
-``scoring`` is dependency-free and unit-tested; the other modules need pygame,
-so they are imported lazily.
+Everything here is dependency-free and unit-tested: the engines take any object
+shaped like a camera frame (see :mod:`telerehab.games.protocols`) and an
+injectable clock, so a whole session can be played through in a test.
 """
+from .calibrating import RangeCalibrationTask, TwoPointCalibrationTask
+from .open_close import OpenCloseEngine
 from .scoring import (
     ButterflySmoother,
     CountdownTimer,
@@ -10,30 +13,16 @@ from .scoring import (
     HoldTimer,
     butterfly_position,
 )
+from .time_score import TimeScoreEngine
 
 __all__ = [
     "ButterflySmoother",
     "CountdownTimer",
     "FlowerTarget",
     "HoldTimer",
+    "OpenCloseEngine",
+    "RangeCalibrationTask",
+    "TimeScoreEngine",
+    "TwoPointCalibrationTask",
     "butterfly_position",
-    "OpenCloseGame",
-    "TimeScoreGame",
-    "RangeCalibrationScreen",
-    "TwoPointCalibrationScreen",
 ]
-
-_LAZY = {
-    "TimeScoreGame": ".time_score",
-    "OpenCloseGame": ".open_close",
-    "RangeCalibrationScreen": ".calibrating",
-    "TwoPointCalibrationScreen": ".calibrating",
-}
-
-
-def __getattr__(name: str):  # pragma: no cover - thin lazy-import shim
-    if name in _LAZY:
-        from importlib import import_module
-
-        return getattr(import_module(_LAZY[name], __name__), name)
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

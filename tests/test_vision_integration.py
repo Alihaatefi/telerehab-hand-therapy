@@ -1,6 +1,6 @@
 """End-to-end vision checks against the project's own reference photographs.
 
-No camera is involved: the two hand photographs shipped in ``assets/images``
+No camera is involved: the two hand photographs shipped in ``resources/reference``
 are fed through the real MediaPipe pipeline. That covers the assumption the
 whole application rests on — that these metrics separate an open hand from a
 closed one — which no amount of synthetic-landmark testing can establish.
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from telerehab.config import IMAGES_DIR, VisionConfig
+from telerehab.config import REFERENCE_DIR, VisionConfig
 from telerehab.vision.calibration import RangeCalibration, TwoPointCalibration
 
 cv2 = pytest.importorskip("cv2")
@@ -19,8 +19,8 @@ pytest.importorskip("mediapipe")
 
 pytestmark = pytest.mark.vision
 
-OPEN_HAND = IMAGES_DIR / "hand_open.jpg"
-CLOSED_HAND = IMAGES_DIR / "hand_closed.jpg"
+OPEN_HAND = REFERENCE_DIR / "hand_open.jpg"
+CLOSED_HAND = REFERENCE_DIR / "hand_closed.jpg"
 
 
 @pytest.fixture(scope="module")

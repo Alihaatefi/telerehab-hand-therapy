@@ -71,20 +71,33 @@ class HandTracker:
                 ...
     """
 
-    def __init__(self, config: VisionConfig | None = None, *, mirror: bool = True):
+    def __init__(
+        self,
+        config: VisionConfig | None = None,
+        *,
+        mirror: bool = True,
+        static_image_mode: bool = False,
+        draw_landmarks: bool = True,
+    ):
         self.config = config or VisionConfig()
         self.mirror = mirror
+        #: The skeleton is drawn into the returned frame only when asked for. A
+        #: user interface that draws its own overlay wants the clean frame.
+        self.draw_landmarks = draw_landmarks
         self._capture: cv2.VideoCapture | None = None
-        self._hands = _mp_hands.Hands(
-            static_image_mode=False,
+
+        options = dict(
+            static_image_mode=static_image_mode,
             max_num_hands=self.config.max_num_hands,
             min_detection_confidence=self.config.min_detection_confidence,
-            min_tracking_confidence=self.config.min_tracking_confidence,
         )
+        if not static_image_mode:
+            options["min_tracking_confidence"] = self.config.min_tracking_confidence
+        self._hands = _mp_hands.Hands(**options)
 
     # -- lifecycle ---------------------------------------------------------
 
-    def open(self) -> "HandTracker":
+    def open(self) -> HandTracker:
         if self._capture is None:
             capture = cv2.VideoCapture(self.config.camera_index)
             if not capture.isOpened():
@@ -102,7 +115,7 @@ class HandTracker:
             self._capture = None
         self._hands.close()
 
-    def __enter__(self) -> "HandTracker":
+    def __enter__(self) -> HandTracker:
         return self.open()
 
     def __exit__(self, *exc_info: object) -> None:
@@ -140,7 +153,8 @@ class HandTracker:
             return HandSample(frame=frame, points=None)
 
         landmarks = hands_found[0]
-        _mp_drawing.draw_landmarks(frame, landmarks, _mp_hands.HAND_CONNECTIONS)
+        if self.draw_landmarks:
+            _mp_drawing.draw_landmarks(frame, landmarks, _mp_hands.HAND_CONNECTIONS)
         points = [(lm.x, lm.y) for lm in landmarks.landmark]
         return HandSample(frame=frame, points=points)
 
@@ -157,16 +171,7 @@ def still_image_tracker(config: VisionConfig | None = None) -> Iterator[HandTrac
     MediaPipe's tracking mode assumes temporal continuity between calls; for
     isolated images that produces worse landmarks than static mode does.
     """
-    config = config or VisionConfig()
-    tracker = HandTracker.__new__(HandTracker)
-    tracker.config = config
-    tracker.mirror = False
-    tracker._capture = None
-    tracker._hands = _mp_hands.Hands(
-        static_image_mode=True,
-        max_num_hands=config.max_num_hands,
-        min_detection_confidence=config.min_detection_confidence,
-    )
+    tracker = HandTracker(config, mirror=False, static_image_mode=True)
     try:
         yield tracker
     finally:
