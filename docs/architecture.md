@@ -285,5 +285,6 @@ pytest -m ui              # only the Qt tests
 | Art drawn in code | No bitmap licensing, sharp at any scale, and animated by the exercise state. |
 | Camera on its own thread, frames dropped when busy | Detection takes tens of milliseconds; the newest frame is the only one worth showing. |
 | `SpinField` built on `QLineEdit` | A style-sheeted `QSpinBox` collapses its editor to a one-pixel sliver; the number was invisible. |
+| PySide6 capped below 6.12 | 6.12.0 corrupts the heap on Python 3.10 on Linux after a few thousand signal emissions; found by CI and reproduced outside the project. 6.11.x passes the whole suite on that combination. |
 | MediaPipe pinned to 0.10.14 | Later releases dropped `mp.solutions`; all access is behind `vision/hand_tracker.py`. |
 | Results packed into `/vital-signs` | The deployed backend offered no other write surface; documented, and confined to one table. |

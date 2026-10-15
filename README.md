@@ -102,6 +102,11 @@ run. `python mock_server/server.py --reset` empties the demo store.
 (after confirmation). During Open/Close calibration: `O` capture the open hand,
 `C` capture the closed hand, `S` start, `R` redo.
 
+> **On the PySide6 cap.** `requirements.txt` keeps PySide6 below 6.12. Release 6.12.0
+> corrupts the heap after a few thousand signal emissions on Python 3.10 on Linux
+> (found by CI, reproduced on Ubuntu with a ten-line script), while 6.11.x passes the
+> whole test suite there. Raise the cap once a fixed release has been verified.
+
 > **On the MediaPipe pin.** `requirements.txt` pins `mediapipe==0.10.14` exactly.
 > Later releases removed the `mp.solutions` API this project is built on, and
 > 0.10.14 is also the last release published with CPython 3.12 wheels. All
