@@ -62,6 +62,10 @@ that the thesis describes are unchanged; everything around them was rebuilt.
 
 ### Fixed
 
+- PySide6 is capped below 6.12. Release 6.12.0 corrupts the heap after a few
+  thousand signal emissions on Python 3.10 on Linux (`free(): invalid size`), which
+  aborted the test run in CI; 6.11.x passes the whole suite there. The cap should be
+  raised once a fixed release has been verified.
 - A 404 from the backend was recognised by searching the error message for
   `"-> 404"`; it is now read from the status code.
 - The demo camera's thumb-to-index distance used to dip below both calibration
