@@ -91,7 +91,7 @@ class TwoPointCalibration:
 
     @property
     def threshold(self) -> float:
-        if not self.ready:
+        if self.open_sample is None or self.closed_sample is None:
             raise CalibrationError("both an open and a closed sample are required")
         return (self.open_sample + self.closed_sample) / 2.0
 

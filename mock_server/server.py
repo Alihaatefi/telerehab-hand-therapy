@@ -193,7 +193,7 @@ class Handler(BaseHTTPRequestHandler):
 
     # -- routes ------------------------------------------------------------
 
-    def do_GET(self) -> None:  # noqa: N802 - required by BaseHTTPRequestHandler
+    def do_GET(self) -> None:
         if self.path == "/vital-signs":
             self._send(HTTPStatus.OK, self.store.vital_signs)
             return
@@ -213,7 +213,7 @@ class Handler(BaseHTTPRequestHandler):
 
         self._send(HTTPStatus.NOT_FOUND, {"message": f"no route for {self.path}"})
 
-    def do_POST(self) -> None:  # noqa: N802 - required by BaseHTTPRequestHandler
+    def do_POST(self) -> None:
         payload = self._read_json()
         if payload is None:
             self._send(HTTPStatus.BAD_REQUEST, {"message": "malformed JSON body"})

@@ -24,7 +24,15 @@ logger = logging.getLogger(__name__)
 
 
 class BackendError(RuntimeError):
-    """The backend could not be reached, or answered with an error."""
+    """The backend could not be reached, or answered with an error.
+
+    ``status_code`` is the HTTP status when a response actually arrived, and
+    ``None`` for failures before one did (refused connection, timeout).
+    """
+
+    def __init__(self, message: str, *, status_code: int | None = None):
+        super().__init__(message)
+        self.status_code = status_code
 
 
 class TeleRehabClient:
@@ -46,7 +54,7 @@ class TeleRehabClient:
     def close(self) -> None:
         self._session.close()
 
-    def __enter__(self) -> "TeleRehabClient":
+    def __enter__(self) -> TeleRehabClient:
         return self
 
     def __exit__(self, *exc_info: object) -> None:
@@ -80,7 +88,10 @@ class TeleRehabClient:
             # Reached only when a response actually arrived, so the server's own
             # error body is available and worth passing on to the caller.
             detail = response.text.strip()[:200] or response.reason
-            raise BackendError(f"{method} {url} -> {response.status_code}: {detail}")
+            raise BackendError(
+                f"{method} {url} -> {response.status_code}: {detail}",
+                status_code=response.status_code,
+            )
 
         return response
 
@@ -114,7 +125,7 @@ class TeleRehabClient:
         try:
             response = self._request("GET", f"/patients/{patient_id}")
         except BackendError as exc:
-            if "-> 404" in str(exc):
+            if exc.status_code == 404:
                 return None
             raise
 

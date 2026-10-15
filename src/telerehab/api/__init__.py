@@ -10,12 +10,12 @@ from .models import (
 )
 
 __all__ = [
-    "BackendError",
-    "TeleRehabClient",
     "FIELD_MAP",
+    "BackendError",
     "GameMode",
     "MetricField",
     "Patient",
     "Session",
+    "TeleRehabClient",
     "new_patient_payload",
 ]

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 from collections import deque
-from typing import Callable, Deque
+from typing import Callable
 
 Clock = Callable[[], float]
 
@@ -25,7 +25,7 @@ class ButterflySmoother:
     def __init__(self, window: int = 5):
         if window < 1:
             raise ValueError("window must be at least 1")
-        self._samples: Deque[float] = deque(maxlen=window)
+        self._samples: deque[float] = deque(maxlen=window)
 
     def push(self, position: float) -> float:
         self._samples.append(position)

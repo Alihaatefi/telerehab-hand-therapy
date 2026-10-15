@@ -1,8 +1,6 @@
 """Openness metrics over synthetic hands."""
 from __future__ import annotations
 
-import math
-
 import pytest
 
 from telerehab.vision.geometry import (

@@ -96,7 +96,7 @@ class Patient:
     last_name: str = ""
 
     @classmethod
-    def from_payload(cls, payload: Mapping[str, Any]) -> "Patient":
+    def from_payload(cls, payload: Mapping[str, Any]) -> Patient:
         return cls(
             id=int(payload["id"]),
             first_name=str(payload.get("firstName", "")),
@@ -135,7 +135,7 @@ class Session:
         gain: float,
         exercise_seconds: int,
         movements: int,
-    ) -> "Session":
+    ) -> Session:
         return cls(
             patient_id=patient_id,
             mode=GameMode.TIME_SCORE,
@@ -156,7 +156,7 @@ class Session:
         close_seconds: int,
         repetitions: int,
         completed_repetitions: int,
-    ) -> "Session":
+    ) -> Session:
         return cls(
             patient_id=patient_id,
             mode=GameMode.OPEN_CLOSE,
@@ -182,7 +182,7 @@ class Session:
         return payload
 
     @classmethod
-    def from_payload(cls, payload: Mapping[str, Any]) -> "Session | None":
+    def from_payload(cls, payload: Mapping[str, Any]) -> Session | None:
         """Unpack a stored vital-signs row, or ``None`` if it is not a session.
 
         The ``/vital-signs`` resource is shared with genuine clinical readings

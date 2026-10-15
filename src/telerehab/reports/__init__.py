@@ -1,12 +1,26 @@
-"""Chart rendering and on-screen report browsing."""
-from .charts import progress_chart, session_chart, to_surface
+"""Report data and export.
 
-__all__ = ["progress_chart", "session_chart", "to_surface", "ChartViewer"]
+``series`` prepares what a chart or table shows; ``export`` writes it out. Both
+are free of any drawing code — the interface draws the charts itself.
+"""
+from .export import default_filename, sessions_to_csv, sessions_to_pdf
+from .series import (
+    Series,
+    Summary,
+    format_value,
+    metric_series,
+    sessions_in_mode,
+    summarize,
+)
 
-
-def __getattr__(name: str):  # pragma: no cover - thin lazy-import shim
-    if name == "ChartViewer":
-        from .viewer import ChartViewer
-
-        return ChartViewer
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+__all__ = [
+    "Series",
+    "Summary",
+    "default_filename",
+    "format_value",
+    "metric_series",
+    "sessions_in_mode",
+    "sessions_to_csv",
+    "sessions_to_pdf",
+    "summarize",
+]
